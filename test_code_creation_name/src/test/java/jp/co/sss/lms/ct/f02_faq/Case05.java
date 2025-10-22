@@ -43,8 +43,8 @@ public class Case05 {
 	void test01() {
 		goTo("http://localhost:8080/lms/");
 		assertEquals("ログイン | LMS", webDriver.getTitle());
-		getEvidence(new Object() {
-		});
+		//		getEvidence(new Object() {
+		//		});
 	}
 
 	@Test
@@ -63,8 +63,8 @@ public class Case05 {
 		loginButton.click();
 
 		assertEquals("http://localhost:8080/lms/course/detail", webDriver.getCurrentUrl());
-		getEvidence(new Object() {
-		});
+		//		getEvidence(new Object() {
+		//		});
 	}
 
 	@Test
@@ -77,8 +77,8 @@ public class Case05 {
 		help.click();
 
 		assertEquals("http://localhost:8080/lms/help", webDriver.getCurrentUrl());
-		getEvidence(new Object() {
-		});
+		//		getEvidence(new Object() {
+		//		});
 	}
 
 	@Test
@@ -99,15 +99,25 @@ public class Case05 {
 			}
 		}
 		assertEquals("http://localhost:8080/lms/faq", webDriver.getCurrentUrl());
-		getEvidence(new Object() {
-		});
+		//		getEvidence(new Object() {
+		//		});
 	}
 
 	@Test
 	@Order(5)
 	@DisplayName("テスト05 キーワード検索で該当キーワードを含む検索結果だけ表示")
 	void test05() {
-		// TODO ここに追加
+		WebElement keyword = webDriver.findElement(By.name("keyword"));
+		keyword.sendKeys("セルフ");
+
+		WebElement search = webDriver.findElement(By.xpath("//input[@value='検索']"));
+		search.click();
+
+		WebElement result = webDriver.findElement(By.className("mb10"));
+		assertEquals("Q.セルフ・キャリアドック制度とは何か", result.getText());
+
+		getEvidence(new Object() {
+		});
 	}
 
 	@Test
