@@ -55,12 +55,16 @@ public class Case03 {
 		password.clear();
 
 		// 初回ログイン済みの受講生ユーザーでログイン
-		loginId.sendKeys("StudentAA01");
-		password.sendKeys("StudentAA01");
+		loginId.sendKeys("StudentAA03");
+		password.sendKeys("StudentAA0303");
 
-		// ログインボタン押下
 		WebElement loginButton = webDriver.findElement(By.className("btn-primary"));
 		loginButton.click();
+
+		assertEquals("http://localhost:8080/lms/course/detail", webDriver.getCurrentUrl());
+
+		getEvidence(new Object() {
+		});
 	}
 
 }
