@@ -3,6 +3,9 @@ package jp.co.sss.lms.ct.f02_faq;
 import static jp.co.sss.lms.ct.util.WebDriverUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Iterator;
+import java.util.Set;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -84,6 +87,25 @@ public class Case04 {
 	void test04() {
 		WebElement faq = webDriver.findElement(By.linkText("よくある質問"));
 		faq.click();
+
+		// 全てのウィンドウハンドルを取得
+		Set<String> windowHandles = webDriver.getWindowHandles();
+		// ログインしたウィンドウ以外もウィンドウが開かれているか確認
+		assertTrue(windowHandles.size() > 1);
+
+		// タブの切り替え
+		Iterator<String> iterator = windowHandles.iterator();
+		while (iterator.hasNext()) {
+			String faqWindow = iterator.next();
+
+			if (!faqWindow.equals(windowHandles)) {
+				// 操作するウィンドウを「よくある質問画面」に指定
+				webDriver.switchTo().window(faqWindow);
+			}
+		}
+
+		// if文内で指定したタブのURLを確認
+		assertEquals("http://localhost:8080/lms/faq", webDriver.getCurrentUrl());
 
 		getEvidence(new Object() {
 		});
