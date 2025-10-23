@@ -109,7 +109,7 @@ public class Case07 {
 
 		// セクション詳細画面の提出ボタンの表記が変わっているか確認
 		WebElement dailyReport = webDriver.findElement(By.xpath("//input[@value='提出済み日報【デモ】を確認する']"));
-		dailyReport.getAttribute("value");
+		//dailyReport.getAttribute("value");
 		assertEquals("提出済み日報【デモ】を確認する", dailyReport.getAttribute("value"));
 
 		getEvidence(new Object() {
