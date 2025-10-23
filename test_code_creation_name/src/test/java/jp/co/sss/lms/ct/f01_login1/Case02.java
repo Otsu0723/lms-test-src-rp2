@@ -55,8 +55,8 @@ public class Case02 {
 		password.clear();
 
 		// DBに登録されていないユーザー情報を入力
-		loginId.sendKeys("StudentAA10");
-		password.sendKeys("StudentAA10");
+		loginId.sendKeys("Testtest01");
+		password.sendKeys("Testtest01");
 
 		// ログインボタン押下
 		WebElement loginButton = webDriver.findElement(By.className("btn-primary"));
