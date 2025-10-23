@@ -3,12 +3,10 @@ package jp.co.sss.lms.ct.f02_faq;
 import static jp.co.sss.lms.ct.util.WebDriverUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -17,8 +15,6 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.openqa.selenium.By;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebElement;
 
 /**
@@ -48,8 +44,8 @@ public class Case06 {
 	void test01() {
 		goTo("http://localhost:8080/lms/");
 		assertEquals("ログイン | LMS", webDriver.getTitle());
-		//		getEvidence(new Object() {
-		//		});
+		getEvidence(new Object() {
+		});
 	}
 
 	@Test
@@ -68,8 +64,8 @@ public class Case06 {
 		loginButton.click();
 
 		assertEquals("http://localhost:8080/lms/course/detail", webDriver.getCurrentUrl());
-		//		getEvidence(new Object() {
-		//		});
+		getEvidence(new Object() {
+		});
 	}
 
 	@Test
@@ -82,8 +78,8 @@ public class Case06 {
 		help.click();
 
 		assertEquals("http://localhost:8080/lms/help", webDriver.getCurrentUrl());
-		//		getEvidence(new Object() {
-		//		});
+		getEvidence(new Object() {
+		});
 	}
 
 	@Test
@@ -104,8 +100,8 @@ public class Case06 {
 			}
 		}
 		assertEquals("http://localhost:8080/lms/faq", webDriver.getCurrentUrl());
-		//		getEvidence(new Object() {
-		//		});
+		getEvidence(new Object() {
+		});
 	}
 
 	@Test
@@ -122,9 +118,8 @@ public class Case06 {
 		WebElement result = webDriver.findElement(By.className("mb10"));
 		assertEquals("Q.キャンセル料・途中退校について", result.getText());
 
-		// エビデンスを取得する
-		File file = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.FILE);
-		FileUtils.copyFile(file, new File("C:\\work\\ScreenShot\\result.png"));
+		getEvidence(new Object() {
+		});
 	}
 
 	@Test
@@ -134,14 +129,14 @@ public class Case06 {
 		WebElement question = webDriver.findElement(By.className("sorting_1"));
 		question.click();
 
+		// 検索結果の質問に対する回答の確認
 		WebElement answer = webDriver.findElement(By.id("answer-h[${status.index}]"));
-		String answerTest = "A. 受講者の退職や解雇等、やむを得ない事情による途中終了に関してなど、"
+		String answerText = "A. 受講者の退職や解雇等、やむを得ない事情による途中終了に関してなど、"
 				+ "事情をお伺いした上で、協議という形を取らせて頂きます。 弊社営業担当までご相談下さい。";
-		assertEquals(answerTest, answer.getText());
+		assertEquals(answerText, answer.getText());
 
-		// エビデンスを取得する
-		File file = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.FILE);
-		FileUtils.copyFile(file, new File("C:\\work\\ScreenShot\\faq.png"));
+		getEvidence(new Object() {
+		});
 	}
 
 }
