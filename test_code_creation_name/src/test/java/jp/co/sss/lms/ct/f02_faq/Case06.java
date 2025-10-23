@@ -3,7 +3,6 @@ package jp.co.sss.lms.ct.f02_faq;
 import static jp.co.sss.lms.ct.util.WebDriverUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.IOException;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -107,7 +106,7 @@ public class Case06 {
 	@Test
 	@Order(5)
 	@DisplayName("テスト05 カテゴリ検索で該当カテゴリの検索結果だけ表示")
-	void test05() throws IOException {
+	void test05() {
 		WebElement category = webDriver.findElement(By.linkText("【研修関係】"));
 		category.click();
 
@@ -125,7 +124,7 @@ public class Case06 {
 	@Test
 	@Order(6)
 	@DisplayName("テスト06 検索結果の質問をクリックしその回答を表示")
-	void test06() throws IOException {
+	void test06() {
 		WebElement question = webDriver.findElement(By.className("sorting_1"));
 		question.click();
 
