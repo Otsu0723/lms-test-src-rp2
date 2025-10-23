@@ -3,7 +3,6 @@ package jp.co.sss.lms.ct.f02_faq;
 import static jp.co.sss.lms.ct.util.WebDriverUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.IOException;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -107,7 +106,7 @@ public class Case05 {
 	@Test
 	@Order(5)
 	@DisplayName("テスト05 キーワード検索で該当キーワードを含む検索結果だけ表示")
-	void test05() throws IOException {
+	void test05() {
 		WebElement keyword = webDriver.findElement(By.name("keyword"));
 		keyword.sendKeys("セルフ");
 
@@ -128,14 +127,14 @@ public class Case05 {
 	@Test
 	@Order(6)
 	@DisplayName("テスト06 「クリア」ボタン押下で入力したキーワードを消去")
-	void test06() throws IOException {
+	void test06() {
 		WebElement clear = webDriver.findElement(By.xpath("//input[@value='クリア']"));
 		clear.click();
 
 		pageLoadTimeout(5);
 
 		// キーワード入力欄が空か確認
-		WebElement keyword = webDriver.findElement(By.id("form"));
+		WebElement keyword = webDriver.findElement(By.name("keyword"));
 		assertEquals("", keyword.getText());
 
 		getEvidence(new Object() {
