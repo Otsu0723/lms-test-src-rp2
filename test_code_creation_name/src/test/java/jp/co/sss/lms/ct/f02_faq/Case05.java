@@ -114,7 +114,9 @@ public class Case05 {
 		WebElement search = webDriver.findElement(By.xpath("//input[@value='検索']"));
 		search.click();
 
+		// 画面スクロール後、待ち処理5秒
 		scrollBy("window.innerHeight");
+		pageLoadTimeout(5);
 
 		WebElement result = webDriver.findElement(By.className("mb10"));
 		assertEquals("Q.セルフ・キャリアドック制度とは何か", result.getText());
@@ -129,6 +131,12 @@ public class Case05 {
 	void test06() throws IOException {
 		WebElement clear = webDriver.findElement(By.xpath("//input[@value='クリア']"));
 		clear.click();
+
+		pageLoadTimeout(5);
+
+		// キーワード入力欄が空か確認
+		WebElement keyword = webDriver.findElement(By.id("form"));
+		assertEquals("", keyword.getText());
 
 		getEvidence(new Object() {
 		});
