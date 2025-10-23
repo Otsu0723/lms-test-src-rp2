@@ -3,6 +3,7 @@ package jp.co.sss.lms.ct.f02_faq;
 import static jp.co.sss.lms.ct.util.WebDriverUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -43,8 +44,8 @@ public class Case05 {
 	void test01() {
 		goTo("http://localhost:8080/lms/");
 		assertEquals("ログイン | LMS", webDriver.getTitle());
-		//		getEvidence(new Object() {
-		//		});
+		getEvidence(new Object() {
+		});
 	}
 
 	@Test
@@ -63,8 +64,8 @@ public class Case05 {
 		loginButton.click();
 
 		assertEquals("http://localhost:8080/lms/course/detail", webDriver.getCurrentUrl());
-		//		getEvidence(new Object() {
-		//		});
+		getEvidence(new Object() {
+		});
 	}
 
 	@Test
@@ -77,8 +78,8 @@ public class Case05 {
 		help.click();
 
 		assertEquals("http://localhost:8080/lms/help", webDriver.getCurrentUrl());
-		//		getEvidence(new Object() {
-		//		});
+		getEvidence(new Object() {
+		});
 	}
 
 	@Test
@@ -99,19 +100,21 @@ public class Case05 {
 			}
 		}
 		assertEquals("http://localhost:8080/lms/faq", webDriver.getCurrentUrl());
-		//		getEvidence(new Object() {
-		//		});
+		getEvidence(new Object() {
+		});
 	}
 
 	@Test
 	@Order(5)
 	@DisplayName("テスト05 キーワード検索で該当キーワードを含む検索結果だけ表示")
-	void test05() {
+	void test05() throws IOException {
 		WebElement keyword = webDriver.findElement(By.name("keyword"));
 		keyword.sendKeys("セルフ");
 
 		WebElement search = webDriver.findElement(By.xpath("//input[@value='検索']"));
 		search.click();
+
+		scrollBy("window.innerHeight");
 
 		WebElement result = webDriver.findElement(By.className("mb10"));
 		assertEquals("Q.セルフ・キャリアドック制度とは何か", result.getText());
@@ -123,8 +126,12 @@ public class Case05 {
 	@Test
 	@Order(6)
 	@DisplayName("テスト06 「クリア」ボタン押下で入力したキーワードを消去")
-	void test06() {
-		// TODO ここに追加
+	void test06() throws IOException {
+		WebElement clear = webDriver.findElement(By.xpath("//input[@value='クリア']"));
+		clear.click();
+
+		getEvidence(new Object() {
+		});
 	}
 
 }
