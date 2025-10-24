@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 
 /**
@@ -98,13 +99,23 @@ public class Case10 {
 		// 出勤完了メッセージのエビデンス取得
 		getEvidence(new Object() {
 		}, "01");
+		pageLoadTimeout(8);
 
+		WebElement table = webDriver.findElement(By.tagName("tbody"));
+		JavascriptExecutor js = (JavascriptExecutor) webDriver;
+		js.executeScript("arguments[0].scrollTop = arguments[0].scrollTop + arguments[0].scrollHeight;", table);
+
+		scrollBy("window.innerHeight");
+		pageLoadTimeout(8);
+		getEvidence(new Object() {
+		}, "02");
 	}
 
 	@Test
 	@Order(5)
 	@DisplayName("テスト05 「退勤」ボタンを押下し退勤時間を登録")
 	void test05() {
+		scrollTo("0");
 		// 退勤ボタンを押下
 		WebElement punchOut = webDriver.findElement(By.name("punchOut"));
 		punchOut.click();
@@ -118,6 +129,16 @@ public class Case10 {
 		// 退勤完了メッセージのエビデンス取得
 		getEvidence(new Object() {
 		}, "01");
+		pageLoadTimeout(8);
+
+		WebElement table = webDriver.findElement(By.tagName("tbody"));
+		JavascriptExecutor js = (JavascriptExecutor) webDriver;
+		js.executeScript("arguments[0].scrollTop = arguments[0].scrollTop + arguments[0].scrollHeight;", table);
+
+		scrollBy("window.innerHeight");
+		pageLoadTimeout(8);
+		getEvidence(new Object() {
+		}, "02");
 	}
 
 }
