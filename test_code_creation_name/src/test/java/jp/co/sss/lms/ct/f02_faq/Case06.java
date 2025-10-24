@@ -76,9 +76,13 @@ public class Case06 {
 		WebElement help = webDriver.findElement(By.linkText("ヘルプ"));
 		help.click();
 
+		getEvidence(new Object() {
+		}, "01");
+		help.click();
+
 		assertEquals("http://localhost:8080/lms/help", webDriver.getCurrentUrl());
 		getEvidence(new Object() {
-		});
+		}, "02");
 	}
 
 	@Test

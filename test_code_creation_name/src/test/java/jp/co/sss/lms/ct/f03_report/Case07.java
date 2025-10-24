@@ -72,7 +72,6 @@ public class Case07 {
 		// 未提出の研修日を取得
 		WebElement table = webDriver.findElement(By.className("sctionList"));
 		WebElement unsubmission = table.findElement(By.xpath("//span['未提出']"));
-		System.out.println(unsubmission.getText());
 
 		// 取得した研修日の「詳細」ボタンを押下
 		WebElement detail = unsubmission.findElement(By.xpath("//input[@value='詳細']"));
@@ -104,6 +103,9 @@ public class Case07 {
 		// 日報を記入・提出
 		WebElement textarea = webDriver.findElement(By.id("content_0"));
 		textarea.sendKeys("日報登録テスト");
+		getEvidence(new Object() {
+		}, "01");
+
 		WebElement submit = webDriver.findElement(By.xpath("//button[text()='提出する']"));
 		submit.click();
 
@@ -112,7 +114,7 @@ public class Case07 {
 		assertEquals("提出済み日報【デモ】を確認する", dailyReport.getAttribute("value"));
 
 		getEvidence(new Object() {
-		});
+		}, "02");
 	}
 
 }
