@@ -99,8 +99,6 @@ public class Case10 {
 		getEvidence(new Object() {
 		}, "01");
 
-		//WebElement tbody = webDriver.findElement(By.xpath("//tbody"));
-
 	}
 
 	@Test
