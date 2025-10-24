@@ -74,11 +74,14 @@ public class Case05 {
 		WebElement dropdown = webDriver.findElement(By.className("dropdown"));
 		dropdown.click();
 		WebElement help = webDriver.findElement(By.linkText("ヘルプ"));
+
+		getEvidence(new Object() {
+		}, "01");
 		help.click();
 
 		assertEquals("http://localhost:8080/lms/help", webDriver.getCurrentUrl());
 		getEvidence(new Object() {
-		});
+		}, "02");
 	}
 
 	@Test
@@ -110,18 +113,21 @@ public class Case05 {
 		WebElement keyword = webDriver.findElement(By.name("keyword"));
 		keyword.sendKeys("セルフ");
 
+		getEvidence(new Object() {
+		}, "01");
+
 		WebElement search = webDriver.findElement(By.xpath("//input[@value='検索']"));
 		search.click();
 
 		// 画面スクロール後、待ち処理5秒
 		scrollBy("window.innerHeight");
-		pageLoadTimeout(5);
+		pageLoadTimeout(8);
 
 		WebElement result = webDriver.findElement(By.className("mb10"));
 		assertEquals("Q.セルフ・キャリアドック制度とは何か", result.getText());
 
 		getEvidence(new Object() {
-		});
+		}, "02");
 	}
 
 	@Test
