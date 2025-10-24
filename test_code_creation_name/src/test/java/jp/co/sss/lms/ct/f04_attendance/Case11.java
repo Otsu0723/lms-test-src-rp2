@@ -3,6 +3,8 @@ package jp.co.sss.lms.ct.f04_attendance;
 import static jp.co.sss.lms.ct.util.WebDriverUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.List;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -97,24 +99,19 @@ public class Case11 {
 	@Order(5)
 	@DisplayName("テスト05 すべての研修日程の勤怠情報を正しく更新し勤怠管理画面に遷移")
 	void test05() {
-		//		// 全ての「定時」ボタンを取得
-		//		List<WebElement> buttons = webDriver.findElements(By.xpath("//button['定時']"));
-		//
-		//		for (WebElement button : buttons) {
-		//			button.click();
-		//			break;
-		//		}
-		// 1項目のみ定時ボタン押下
-		WebElement button = webDriver.findElement(By.tagName("button"));
-		WebElement zero = button.findElement(By.xpath("//button[@value='0']"));
-		zero.click();
+		WebElement table = webDriver.findElement(By.tagName("tbody"));
+
+		// 全ての「定時」ボタンを取得
+		List<WebElement> buttons = table.findElements(By.tagName("button"));
+		for (WebElement button : buttons) {
+			button.click();
+			scrollBy("120");
+		}
 
 		pageLoadTimeout(5);
 		getEvidence(new Object() {
 		}, "01");
 
-		// 画面スクロール後、待ち処理5秒
-		scrollBy("window.innerHeight");
 		pageLoadTimeout(5);
 
 		WebElement form = webDriver.findElement(By.tagName("form"));
