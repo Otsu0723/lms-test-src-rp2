@@ -93,18 +93,33 @@ public class Case10 {
 		alert.accept();
 
 		WebElement comp = webDriver.findElement(By.className("alert-dismissible"));
-		System.out.println(comp.getText());
 		assertEquals("×\n勤怠情報の登録が完了しました。", comp.getText());
 
+		// 出勤完了メッセージのエビデンス取得
 		getEvidence(new Object() {
-		});
+		}, "01");
+
+		//WebElement tbody = webDriver.findElement(By.xpath("//tbody"));
+
 	}
 
 	@Test
 	@Order(5)
 	@DisplayName("テスト05 「退勤」ボタンを押下し退勤時間を登録")
 	void test05() {
-		// TODO ここに追加
+		// 退勤ボタンを押下
+		WebElement punchOut = webDriver.findElement(By.name("punchOut"));
+		punchOut.click();
+
+		Alert alert = webDriver.switchTo().alert();
+		alert.accept();
+
+		WebElement comp = webDriver.findElement(By.className("alert-dismissible"));
+		assertEquals("×\n勤怠情報の登録が完了しました。", comp.getText());
+
+		// 退勤完了メッセージのエビデンス取得
+		getEvidence(new Object() {
+		}, "01");
 	}
 
 }
