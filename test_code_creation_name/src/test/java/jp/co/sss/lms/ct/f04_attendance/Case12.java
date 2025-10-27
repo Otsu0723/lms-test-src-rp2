@@ -215,8 +215,14 @@ public class Case12 {
 	@DisplayName("テスト09 不適切な内容で修正してエラー表示：備考が100文字超")
 	void test09() {
 		WebElement note = webDriver.findElement(By.name("attendanceList[0].note"));
-		note.sendKeys("あいうえお　あいうえお　あいうえお　あいうえお　あいうえお　あいうえお　あいうえお　あいうえお　"
-				+ "あいうえお　あいうえお　あいうえお　あいうえお　あいうえお　あいうえお　あいうえお　あいうえお　あいうえお");
+
+		// 入力値セット
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < 105; i++) {
+			sb.append("あいうえお");
+		}
+
+		note.sendKeys(sb);
 		getEvidence(new Object() {
 		}, "01");
 
