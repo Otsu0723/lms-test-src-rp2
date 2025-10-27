@@ -71,7 +71,7 @@ public class Case07 {
 
 		// 未提出の研修日を取得
 		WebElement table = webDriver.findElement(By.className("sctionList"));
-		WebElement unsubmission = table.findElement(By.xpath("//span['未提出']"));
+		WebElement unsubmission = table.findElement(By.xpath("//span[text()='未提出']"));
 
 		// 取得した研修日の「詳細」ボタンを押下
 		WebElement detail = unsubmission.findElement(By.xpath("//input[@value='詳細']"));
