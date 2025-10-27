@@ -107,12 +107,10 @@ public class Case12 {
 
 		scrollBy("window.innerHeight");
 		attendanceUpdate();
-
 		alertAccept();
 		pageLoadTimeout(5);
 
-		WebElement div = webDriver.findElement(By.className("bs-component"));
-		WebElement error = div.findElement(By.className("error"));
+		WebElement error = webDriver.findElement(By.className("error"));
 		assertEquals("* 出勤時間が正しく入力されていません。", error.getText());
 		assertEquals("http://localhost:8080/lms/attendance/update", webDriver.getCurrentUrl());
 		getEvidence(new Object() {
@@ -123,28 +121,115 @@ public class Case12 {
 	@Order(6)
 	@DisplayName("テスト06 不適切な内容で修正してエラー表示：出勤が空白で退勤に入力あり")
 	void test06() {
-		// TODO ここに追加
+		// 出勤時間 入力なし
+		Select startHour = new Select(webDriver.findElement(By.name("attendanceList[0].trainingStartTimeHour")));
+		Select startMin = new Select(webDriver.findElement(By.name("attendanceList[0].trainingStartTimeMinute")));
+		startHour.selectByIndex(0);
+		startMin.selectByIndex(0);
+		// 退勤時間 18:00
+		Select endHour = new Select(webDriver.findElement(By.name("attendanceList[0].trainingEndTimeHour")));
+		Select endMin = new Select(webDriver.findElement(By.name("attendanceList[0].trainingEndTimeMinute")));
+		endHour.selectByIndex(19);
+		endMin.selectByIndex(1);
+
+		getEvidence(new Object() {
+		}, "01");
+
+		scrollBy("window.innerHeight");
+		attendanceUpdate();
+		alertAccept();
+		pageLoadTimeout(5);
+
+		WebElement error = webDriver.findElement(By.className("error"));
+		assertEquals("* 出勤情報がないため退勤情報を入力出来ません。", error.getText());
+		assertEquals("http://localhost:8080/lms/attendance/update", webDriver.getCurrentUrl());
+		getEvidence(new Object() {
+		}, "02");
 	}
 
 	@Test
 	@Order(7)
 	@DisplayName("テスト07 不適切な内容で修正してエラー表示：出勤が退勤よりも遅い時間")
 	void test07() {
-		// TODO ここに追加
+		// 出勤時間 14:00
+		Select startHour = new Select(webDriver.findElement(By.name("attendanceList[0].trainingStartTimeHour")));
+		Select startMin = new Select(webDriver.findElement(By.name("attendanceList[0].trainingStartTimeMinute")));
+		startHour.selectByIndex(15);
+		startMin.selectByIndex(1);
+		// 退勤時間 10:00
+		Select endHour = new Select(webDriver.findElement(By.name("attendanceList[0].trainingEndTimeHour")));
+		Select endMin = new Select(webDriver.findElement(By.name("attendanceList[0].trainingEndTimeMinute")));
+		endHour.selectByIndex(11);
+		endMin.selectByIndex(1);
+
+		getEvidence(new Object() {
+		}, "01");
+
+		scrollBy("window.innerHeight");
+		attendanceUpdate();
+		alertAccept();
+		pageLoadTimeout(5);
+
+		WebElement error = webDriver.findElement(By.className("error"));
+		assertEquals("* 退勤時刻[0]は出勤時刻[0]より後でなければいけません。", error.getText());
+		assertEquals("http://localhost:8080/lms/attendance/update", webDriver.getCurrentUrl());
+		getEvidence(new Object() {
+		}, "02");
 	}
 
 	@Test
 	@Order(8)
 	@DisplayName("テスト08 不適切な内容で修正してエラー表示：出退勤時間を超える中抜け時間")
 	void test08() {
-		// TODO ここに追加
+		// 出勤時間 9:00
+		Select startHour = new Select(webDriver.findElement(By.name("attendanceList[0].trainingStartTimeHour")));
+		Select startMin = new Select(webDriver.findElement(By.name("attendanceList[0].trainingStartTimeMinute")));
+		startHour.selectByIndex(10);
+		startMin.selectByIndex(1);
+		// 退勤時間 14:00
+		Select endHour = new Select(webDriver.findElement(By.name("attendanceList[0].trainingEndTimeHour")));
+		Select endMin = new Select(webDriver.findElement(By.name("attendanceList[0].trainingEndTimeMinute")));
+		endHour.selectByIndex(15);
+		endMin.selectByIndex(1);
+		// 中抜け時間 7時間
+		Select blankTime = new Select(webDriver.findElement(By.name("attendanceList[0].blankTime")));
+		blankTime.selectByValue("420");
+
+		getEvidence(new Object() {
+		}, "01");
+
+		scrollBy("window.innerHeight");
+		attendanceUpdate();
+		alertAccept();
+		pageLoadTimeout(5);
+
+		WebElement error = webDriver.findElement(By.className("error"));
+		assertEquals("* 中抜け時間が勤務時間を超えています。", error.getText());
+		assertEquals("http://localhost:8080/lms/attendance/update", webDriver.getCurrentUrl());
+		getEvidence(new Object() {
+		}, "02");
 	}
 
 	@Test
 	@Order(9)
 	@DisplayName("テスト09 不適切な内容で修正してエラー表示：備考が100文字超")
 	void test09() {
-		// TODO ここに追加
+		WebElement note = webDriver.findElement(By.name("attendanceList[0].note"));
+		note.sendKeys("あいうえお　あいうえお　あいうえお　あいうえお　あいうえお　あいうえお　あいうえお　あいうえお　"
+				+ "あいうえお　あいうえお　あいうえお　あいうえお　あいうえお　あいうえお　あいうえお　あいうえお　あいうえお");
+		getEvidence(new Object() {
+		}, "01");
+
+		scrollBy("window.innerHeight");
+		attendanceUpdate();
+		alertAccept();
+		pageLoadTimeout(5);
+
+		WebElement error = webDriver.findElement(By.className("error"));
+		assertEquals("* 備考の長さが最大値(100)を超えています。", error.getText());
+		assertEquals("http://localhost:8080/lms/attendance/update", webDriver.getCurrentUrl());
+		getEvidence(new Object() {
+		}, "02");
 	}
 
 }
