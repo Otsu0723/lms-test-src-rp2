@@ -4,11 +4,13 @@ import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -112,6 +114,27 @@ public class WebDriverUtils {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * アラート true処理
+	 * 
+	 * @author otsuka
+	 */
+	public static void alertAccept() {
+		Alert alert = webDriver.switchTo().alert();
+		alert.accept();
+	}
+
+	/**
+	 * 勤怠情報直接編集画面 「更新」ボタン押下
+	 * 
+	 * @author otsuka
+	 */
+	public static void attendanceUpdate() {
+		WebElement form = webDriver.findElement(By.tagName("form"));
+		WebElement updateComp = form.findElement(By.xpath("//input[@value='更新']"));
+		updateComp.click();
 	}
 
 }

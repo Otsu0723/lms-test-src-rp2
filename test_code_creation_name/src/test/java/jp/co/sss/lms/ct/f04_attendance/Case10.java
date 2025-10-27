@@ -10,7 +10,6 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -73,9 +72,7 @@ public class Case10 {
 		// ナビゲーションバーから勤怠管理画面に遷移
 		WebElement attendance = webDriver.findElement(By.linkText("勤怠"));
 		attendance.click();
-
-		Alert alert = webDriver.switchTo().alert();
-		alert.accept();
+		alertAccept();
 
 		assertEquals("http://localhost:8080/lms/attendance/detail", webDriver.getCurrentUrl());
 		getEvidence(new Object() {
@@ -89,9 +86,7 @@ public class Case10 {
 		// 出勤ボタンを押下
 		WebElement punchIn = webDriver.findElement(By.name("punchIn"));
 		punchIn.click();
-
-		Alert alert = webDriver.switchTo().alert();
-		alert.accept();
+		alertAccept();
 
 		WebElement comp = webDriver.findElement(By.className("alert-dismissible"));
 		assertEquals("×\n勤怠情報の登録が完了しました。", comp.getText());
@@ -119,9 +114,7 @@ public class Case10 {
 		// 退勤ボタンを押下
 		WebElement punchOut = webDriver.findElement(By.name("punchOut"));
 		punchOut.click();
-
-		Alert alert = webDriver.switchTo().alert();
-		alert.accept();
+		alertAccept();
 
 		WebElement comp = webDriver.findElement(By.className("alert-dismissible"));
 		assertEquals("×\n勤怠情報の登録が完了しました。", comp.getText());

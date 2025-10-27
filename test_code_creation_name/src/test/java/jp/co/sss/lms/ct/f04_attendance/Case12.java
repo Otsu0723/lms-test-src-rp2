@@ -10,7 +10,6 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -72,9 +71,7 @@ public class Case12 {
 	void test03() {
 		WebElement attendance = webDriver.findElement(By.linkText("勤怠"));
 		attendance.click();
-
-		Alert alert = webDriver.switchTo().alert();
-		alert.accept();
+		alertAccept();
 
 		assertEquals("http://localhost:8080/lms/attendance/detail", webDriver.getCurrentUrl());
 		getEvidence(new Object() {
@@ -109,12 +106,9 @@ public class Case12 {
 		}, "01");
 
 		scrollBy("window.innerHeight");
-		WebElement form = webDriver.findElement(By.tagName("form"));
-		WebElement updateComp = form.findElement(By.xpath("//input[@value='更新']"));
-		updateComp.click();
+		attendanceUpdate();
 
-		Alert alert = webDriver.switchTo().alert();
-		alert.accept();
+		alertAccept();
 		pageLoadTimeout(5);
 
 		WebElement div = webDriver.findElement(By.className("bs-component"));

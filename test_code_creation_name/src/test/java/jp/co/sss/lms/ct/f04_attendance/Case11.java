@@ -12,7 +12,6 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -73,9 +72,7 @@ public class Case11 {
 	void test03() {
 		WebElement attendance = webDriver.findElement(By.linkText("勤怠"));
 		attendance.click();
-
-		Alert alert = webDriver.switchTo().alert();
-		alert.accept();
+		alertAccept();
 
 		assertEquals("http://localhost:8080/lms/attendance/detail", webDriver.getCurrentUrl());
 		getEvidence(new Object() {
@@ -113,14 +110,9 @@ public class Case11 {
 		}, "01");
 
 		pageLoadTimeout(5);
+		attendanceUpdate();
 
-		WebElement form = webDriver.findElement(By.tagName("form"));
-		WebElement updateComp = form.findElement(By.xpath("//input[@value='更新']"));
-		updateComp.click();
-
-		Alert alert = webDriver.switchTo().alert();
-		alert.accept();
-
+		alertAccept();
 		assertEquals("http://localhost:8080/lms/attendance/update", webDriver.getCurrentUrl());
 
 		WebElement compText = webDriver.findElement(By.className("alert-dismissible"));
