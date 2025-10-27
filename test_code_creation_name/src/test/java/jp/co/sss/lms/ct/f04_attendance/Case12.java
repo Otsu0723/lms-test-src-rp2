@@ -13,6 +13,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
 /**
  * 結合テスト 勤怠管理機能
@@ -97,7 +98,31 @@ public class Case12 {
 	@Order(5)
 	@DisplayName("テスト05 不適切な内容で修正してエラー表示：出退勤の（時）と（分）のいずれかが空白")
 	void test05() {
-		// TODO ここに追加
+		// 出勤時間 9時のみ入力
+		Select startMin = new Select(webDriver.findElement(By.name("attendanceList[0].trainingStartTimeMinute")));
+		startMin.selectByIndex(0);
+		// 退勤時間 00分のみ入力
+		Select endHour = new Select(webDriver.findElement(By.name("attendanceList[0].trainingEndTimeHour")));
+		endHour.selectByIndex(0);
+
+		getEvidence(new Object() {
+		}, "01");
+
+		scrollBy("window.innerHeight");
+		WebElement form = webDriver.findElement(By.tagName("form"));
+		WebElement updateComp = form.findElement(By.xpath("//input[@value='更新']"));
+		updateComp.click();
+
+		Alert alert = webDriver.switchTo().alert();
+		alert.accept();
+		pageLoadTimeout(5);
+
+		WebElement div = webDriver.findElement(By.className("bs-component"));
+		WebElement error = div.findElement(By.className("error"));
+		assertEquals("* 出勤時間が正しく入力されていません。", error.getText());
+		assertEquals("http://localhost:8080/lms/attendance/update", webDriver.getCurrentUrl());
+		getEvidence(new Object() {
+		}, "02");
 	}
 
 	@Test
