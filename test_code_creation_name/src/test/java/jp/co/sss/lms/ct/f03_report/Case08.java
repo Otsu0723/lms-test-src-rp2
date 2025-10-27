@@ -107,6 +107,9 @@ public class Case08 {
 	void test05() {
 		scrollBy("200");
 		List<WebElement> formList = webDriver.findElements(By.className("form-control"));
+
+		getEvidence(new Object() {
+		}, "01");
 		// (1):所感記入欄 (2):振り返り記入欄
 		WebElement feeling = formList.get(3);
 		WebElement review = formList.get(4);
@@ -114,12 +117,15 @@ public class Case08 {
 		// 修正内容を記入
 		feeling.clear();
 		review.clear();
+		getEvidence(new Object() {
+		}, "02");
+
 		feeling.sendKeys("テストケースNo.08週報編集テスト");
 		review.sendKeys("テストケースNo.08週報一週間の振り返り編集テスト");
 
 		pageLoadTimeout(5);
 		getEvidence(new Object() {
-		}, "01");
+		}, "03");
 
 		scrollBy("200");
 		// 「提出する」ボタンを押下後、セクション詳細画面に遷移
@@ -129,21 +135,48 @@ public class Case08 {
 		pageLoadTimeout(5);
 		assertEquals("セクション詳細 | LMS", webDriver.getTitle());
 		getEvidence(new Object() {
-		}, "02");
+		}, "04");
 	}
 
 	@Test
 	@Order(6)
 	@DisplayName("テスト06 上部メニューの「ようこそ○○さん」リンクからユーザー詳細画面に遷移")
 	void test06() {
-		// TODO ここに追加
+		WebElement navbar = webDriver.findElement(By.className("navbar-right"));
+		WebElement myPage = navbar.findElement(By.partialLinkText("ようこそ"));
+		myPage.click();
+
+		scrollBy("200");
+		pageLoadTimeout(5);
+		assertEquals("ユーザー詳細", webDriver.getTitle());
+		getEvidence(new Object() {
+		});
 	}
 
 	@Test
 	@Order(7)
 	@DisplayName("テスト07 該当レポートの「詳細」ボタンを押下しレポート詳細画面で修正内容が反映される")
 	void test07() {
-		// TODO ここに追加
+		WebElement detail = webDriver.findElement(By.xpath("//input[@value='詳細']"));
+		detail.click();
+		pageLoadTimeout(5);
+		assertEquals("レポート詳細 | LMS", webDriver.getTitle());
+
+		// テーブルのリストを取得
+		List<WebElement> tableList = webDriver.findElements(By.tagName("table"));
+		WebElement reportDetail = tableList.get(2);
+
+		// tableList(2)の中のtdタグをリスト化
+		List<WebElement> tdList = reportDetail.findElements(By.tagName("td"));
+		// 所感記入欄
+		WebElement tdFeeling = tdList.get(1);
+		// 振り返り記入欄
+		WebElement tdReview = tdList.get(2);
+
+		assertEquals("テストケースNo.08週報編集テスト", tdFeeling.getText());
+		assertEquals("テストケースNo.08週報一週間の振り返り編集テスト", tdReview.getText());
+		getEvidence(new Object() {
+		});
 	}
 
 }
