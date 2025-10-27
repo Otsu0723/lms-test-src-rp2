@@ -94,14 +94,42 @@ public class Case08 {
 	@Order(4)
 	@DisplayName("テスト04 「確認する」ボタンを押下しレポート登録画面に遷移")
 	void test04() {
-		// TODO ここに追加
+		WebElement weekReport = webDriver.findElement(By.xpath("//input[@value='提出済み週報【デモ】を確認する']"));
+		weekReport.click();
+		assertEquals("http://localhost:8080/lms/report/regist", webDriver.getCurrentUrl());
+		getEvidence(new Object() {
+		});
 	}
 
 	@Test
 	@Order(5)
 	@DisplayName("テスト05 報告内容を修正して「提出する」ボタンを押下しセクション詳細画面に遷移")
 	void test05() {
-		// TODO ここに追加
+		scrollBy("200");
+		List<WebElement> formList = webDriver.findElements(By.className("form-control"));
+		// (1):所感記入欄 (2):振り返り記入欄
+		WebElement feeling = formList.get(3);
+		WebElement review = formList.get(4);
+
+		// 修正内容を記入
+		feeling.clear();
+		review.clear();
+		feeling.sendKeys("テストケースNo.08週報編集テスト");
+		review.sendKeys("テストケースNo.08週報一週間の振り返り編集テスト");
+
+		pageLoadTimeout(5);
+		getEvidence(new Object() {
+		}, "01");
+
+		scrollBy("200");
+		// 「提出する」ボタンを押下後、セクション詳細画面に遷移
+		WebElement button = webDriver.findElement(By.xpath("//button[text()='提出する']"));
+		button.click();
+
+		pageLoadTimeout(5);
+		assertEquals("セクション詳細 | LMS", webDriver.getTitle());
+		getEvidence(new Object() {
+		}, "02");
 	}
 
 	@Test
