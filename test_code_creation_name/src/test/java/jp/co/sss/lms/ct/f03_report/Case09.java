@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
 /**
  * 結合テスト レポート機能
@@ -85,6 +86,7 @@ public class Case09 {
 		scrollBy("200");
 		WebElement detail = webDriver.findElement(By.xpath("//input[@value='修正する']"));
 		detail.click();
+
 		pageLoadTimeout(5);
 		assertEquals("レポート登録 | LMS", webDriver.getTitle());
 		getEvidence(new Object() {
@@ -95,14 +97,55 @@ public class Case09 {
 	@Order(5)
 	@DisplayName("テスト05 報告内容を修正して「提出する」ボタンを押下しエラー表示：学習項目が未入力")
 	void test05() {
-		// TODO ここに追加
+		WebElement genre = webDriver.findElement(By.id("intFieldName_0"));
+		genre.clear();
+
+		pageLoadTimeout(5);
+		assertEquals("", genre.getAttribute("value"));
+		getEvidence(new Object() {
+		}, "01");
+
+		scrollHeight();
+		// 「提出する」ボタンを押下
+		WebElement button = webDriver.findElement(By.xpath("//button[text()='提出する']"));
+		button.click();
+
+		WebElement error = webDriver.findElement(By.className("error"));
+		WebElement span = error.findElement(By.xpath("//span[text()='* 理解度を入力した場合は、学習項目は必須です。']"));
+		// エラーメッセージのアサーションメソッドを打鍵する
+		assertEquals("* 理解度を入力した場合は、学習項目は必須です。", span.getText());
+
+		pageLoadTimeout(5);
+		getEvidence(new Object() {
+		}, "02");
 	}
 
 	@Test
 	@Order(6)
 	@DisplayName("テスト06 不適切な内容で修正して「提出する」ボタンを押下しエラー表示：理解度が未入力")
 	void test06() {
-		// TODO ここに追加
+		// 学習項目を再入力後、理解度を未入力に
+		WebElement genre = webDriver.findElement(By.id("intFieldName_0"));
+		genre.sendKeys("自動テスト入力チェック");
+		Select feildValue = new Select(webDriver.findElement(By.id("intFieldValue_0")));
+		feildValue.selectByIndex(0);
+
+		getEvidence(new Object() {
+		}, "01");
+
+		scrollHeight();
+		// 「提出する」ボタンを押下
+		WebElement button = webDriver.findElement(By.xpath("//button[text()='提出する']"));
+		button.click();
+
+		WebElement error = webDriver.findElement(By.className("error"));
+		WebElement span = error.findElement(By.xpath("//span[text()='* 学習項目を入力した場合は、理解度は必須です。']"));
+		// エラーメッセージのアサーションメソッドを打鍵する
+		assertEquals("* 学習項目を入力した場合は、理解度は必須です。", span.getText());
+
+		pageLoadTimeout(5);
+		getEvidence(new Object() {
+		}, "02");
 	}
 
 	@Test
