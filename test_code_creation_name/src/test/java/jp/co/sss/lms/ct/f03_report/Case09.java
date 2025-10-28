@@ -114,7 +114,7 @@ public class Case09 {
 		WebElement span = error.findElement(By.xpath("//span[text()='* 理解度を入力した場合は、学習項目は必須です。']"));
 		// エラーメッセージのアサーションメソッドを打鍵する
 		assertEquals("* 理解度を入力した場合は、学習項目は必須です。", span.getText());
-
+		assertEquals("http://localhost:8080/lms/report/complete", webDriver.getCurrentUrl());
 		pageLoadTimeout(5);
 		getEvidence(new Object() {
 		}, "02");
@@ -134,15 +134,14 @@ public class Case09 {
 		}, "01");
 
 		scrollHeight();
-		// 「提出する」ボタンを押下
 		WebElement button = webDriver.findElement(By.xpath("//button[text()='提出する']"));
 		button.click();
 
 		WebElement error = webDriver.findElement(By.className("error"));
 		WebElement span = error.findElement(By.xpath("//span[text()='* 学習項目を入力した場合は、理解度は必須です。']"));
-		// エラーメッセージのアサーションメソッドを打鍵する
-		assertEquals("* 学習項目を入力した場合は、理解度は必須です。", span.getText());
 
+		assertEquals("* 学習項目を入力した場合は、理解度は必須です。", span.getText());
+		assertEquals("http://localhost:8080/lms/report/complete", webDriver.getCurrentUrl());
 		pageLoadTimeout(5);
 		getEvidence(new Object() {
 		}, "02");
@@ -152,28 +151,120 @@ public class Case09 {
 	@Order(7)
 	@DisplayName("テスト07 不適切な内容で修正して「提出する」ボタンを押下しエラー表示：目標の達成度が数値以外")
 	void test07() {
-		// TODO ここに追加
+		Select feildValue = new Select(webDriver.findElement(By.id("intFieldValue_0")));
+		feildValue.selectByIndex(3);
+
+		// 「目標の達成度」を「理解できた。」に設定
+		WebElement goal = webDriver.findElement(By.id("content_0"));
+		goal.clear();
+		goal.sendKeys("理解できた。");
+
+		getEvidence(new Object() {
+		}, "01");
+
+		scrollHeight();
+		WebElement button = webDriver.findElement(By.xpath("//button[text()='提出する']"));
+		button.click();
+
+		WebElement error = webDriver.findElement(By.className("error"));
+		WebElement span = error.findElement(By.xpath("//span[text()='* 目標の達成度は半角数字で入力してください。']"));
+
+		assertEquals("* 目標の達成度は半角数字で入力してください。", span.getText());
+		assertEquals("http://localhost:8080/lms/report/complete", webDriver.getCurrentUrl());
+		pageLoadTimeout(5);
+		getEvidence(new Object() {
+		}, "02");
 	}
 
 	@Test
 	@Order(8)
 	@DisplayName("テスト08 不適切な内容で修正して「提出する」ボタンを押下しエラー表示：目標の達成度が範囲外")
 	void test08() {
-		// TODO ここに追加
+		// 「目標の達成度」を「11」に設定
+		WebElement goal = webDriver.findElement(By.id("content_0"));
+		goal.clear();
+		goal.sendKeys("11");
+
+		getEvidence(new Object() {
+		}, "01");
+
+		scrollHeight();
+		WebElement button = webDriver.findElement(By.xpath("//button[text()='提出する']"));
+		button.click();
+
+		WebElement error = webDriver.findElement(By.className("error"));
+		WebElement span = error.findElement(By.xpath("//span[text()='* 目標の達成度は、半角数字で、1～10の範囲内で入力してください。']"));
+
+		assertEquals("* 目標の達成度は、半角数字で、1～10の範囲内で入力してください。", span.getText());
+		assertEquals("http://localhost:8080/lms/report/complete", webDriver.getCurrentUrl());
+		pageLoadTimeout(5);
+		getEvidence(new Object() {
+		}, "02");
 	}
 
 	@Test
 	@Order(9)
 	@DisplayName("テスト09 不適切な内容で修正して「提出する」ボタンを押下しエラー表示：目標の達成度・所感が未入力")
 	void test09() {
-		// TODO ここに追加
+		// 「目標の達成度」を未入力に設定
+		WebElement goal = webDriver.findElement(By.id("content_0"));
+		goal.clear();
+		// 「所感」を未入力に設定
+		WebElement feeling = webDriver.findElement(By.id("content_1"));
+		feeling.clear();
+
+		pageLoadTimeout(5);
+		assertEquals("", goal.getAttribute("value"));
+		assertEquals("", feeling.getAttribute("value"));
+		getEvidence(new Object() {
+		}, "01");
+
+		scrollHeight();
+		WebElement button = webDriver.findElement(By.xpath("//button[text()='提出する']"));
+		button.click();
+
+		assertEquals("http://localhost:8080/lms/report/complete", webDriver.getCurrentUrl());
+		scrollBy("200");
+		pageLoadTimeout(5);
+		getEvidence(new Object() {
+		}, "02");
 	}
 
 	@Test
 	@Order(10)
 	@DisplayName("テスト10 不適切な内容で修正して「提出する」ボタンを押下しエラー表示：所感・一週間の振り返りが2000文字超")
 	void test10() {
-		// TODO ここに追加
+		scrollHeight();
+		// 「目標の達成度」を「10」に設定
+		WebElement goal = webDriver.findElement(By.id("content_0"));
+		goal.clear();
+		goal.sendKeys("10");
+
+		// 「所感」と「一週間の振り返り」に2010字を設定
+		WebElement feeling = webDriver.findElement(By.id("content_1"));
+		WebElement weekReview = webDriver.findElement(By.id("content_2"));
+		weekReview.clear();
+
+		// 入力値セット
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < 2010; i++) {
+			sb.append("あいうえお");
+		}
+
+		pageLoadTimeout(60);
+		feeling.sendKeys(sb);
+		weekReview.sendKeys(sb);
+		getEvidence(new Object() {
+		}, "01");
+
+		WebElement button = webDriver.findElement(By.xpath("//button[text()='提出する']"));
+		button.click();
+
+		assertEquals("http://localhost:8080/lms/report/complete", webDriver.getCurrentUrl());
+		scrollHeight();
+		pageLoadTimeout(5);
+		getEvidence(new Object() {
+		}, "02");
 	}
 
 }
