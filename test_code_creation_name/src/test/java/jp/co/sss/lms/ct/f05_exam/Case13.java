@@ -125,6 +125,7 @@ public class Case13 {
 		WebElement div = webDriver.findElement(By.className("container"));
 		WebElement button = div.findElement(By.xpath("//input[@value='確認画面へ進む']"));
 
+		pageLoadTimeout(10);
 		visibilityTimeout((By.xpath("//input[@value='確認画面へ進む']")), 20);
 		button.click();
 
@@ -139,6 +140,7 @@ public class Case13 {
 	@DisplayName("テスト07 「回答を送信する」ボタンを押下し試験結果画面に遷移")
 	void test07() throws InterruptedException {
 		scrollHeight();
+		pageLoadTimeout(20);
 		WebElement button = webDriver.findElement(By.id("sendButton"));
 		button.click();
 		alertAccept();
