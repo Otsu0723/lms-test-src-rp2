@@ -94,6 +94,7 @@ public class Case08 {
 	@Order(4)
 	@DisplayName("テスト04 「確認する」ボタンを押下しレポート登録画面に遷移")
 	void test04() {
+		scrollBy("200");
 		WebElement weekReport = webDriver.findElement(By.xpath("//input[@value='提出済み週報【デモ】を確認する']"));
 		weekReport.click();
 		assertEquals("http://localhost:8080/lms/report/regist", webDriver.getCurrentUrl());
