@@ -74,7 +74,7 @@ public class Case13 {
 	@Order(3)
 	@DisplayName("テスト03 「試験有」の研修日の「詳細」ボタンを押下しセクション詳細画面に遷移")
 	void test03() {
-		// 週報提出済みの研修日を取得
+		// 「試験有」の研修日を取得
 		WebElement table = webDriver.findElement(By.className("sctionList"));
 		List<WebElement> tableList = table.findElements(By.tagName("td"));
 		WebElement exam = tableList.get(8);
