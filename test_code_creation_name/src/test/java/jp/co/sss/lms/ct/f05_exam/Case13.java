@@ -108,28 +108,59 @@ public class Case13 {
 	@Order(5)
 	@DisplayName("テスト05 「試験を開始する」ボタンを押下し試験問題画面に遷移")
 	void test05() {
-		// TODO ここに追加
+		WebElement button = webDriver.findElement(By.xpath("//input[@value='試験を開始する']"));
+		button.click();
+
+		pageLoadTimeout(5);
+		assertEquals("http://localhost:8080/lms/exam/question", webDriver.getCurrentUrl());
+		getEvidence(new Object() {
+		});
 	}
 
 	@Test
 	@Order(6)
 	@DisplayName("テスト06 未回答の状態で「確認画面へ進む」ボタンを押下し試験回答確認画面に遷移")
 	void test06() {
-		// TODO ここに追加
+		scrollHeight();
+		WebElement div = webDriver.findElement(By.className("container"));
+		WebElement button = div.findElement(By.xpath("//input[@value='確認画面へ進む']"));
+
+		visibilityTimeout((By.xpath("//input[@value='確認画面へ進む']")), 20);
+		button.click();
+
+		pageLoadTimeout(5);
+		assertEquals("http://localhost:8080/lms/exam/answerCheck", webDriver.getCurrentUrl());
+		getEvidence(new Object() {
+		});
 	}
 
 	@Test
 	@Order(7)
 	@DisplayName("テスト07 「回答を送信する」ボタンを押下し試験結果画面に遷移")
 	void test07() throws InterruptedException {
-		// TODO ここに追加
+		scrollHeight();
+		WebElement button = webDriver.findElement(By.id("sendButton"));
+		button.click();
+		alertAccept();
+
+		pageLoadTimeout(5);
+		assertEquals("http://localhost:8080/lms/exam/result", webDriver.getCurrentUrl());
+		getEvidence(new Object() {
+		});
 	}
 
 	@Test
 	@Order(8)
 	@DisplayName("テスト08 「戻る」ボタンを押下し試験開始画面に遷移後当該試験の結果が反映される")
 	void test08() {
-		// TODO ここに追加
+		scrollHeight();
+		WebElement button = webDriver.findElement(By.xpath("//input[@value='戻る']"));
+		button.click();
+
+		pageLoadTimeout(5);
+		assertEquals("http://localhost:8080/lms/exam/start", webDriver.getCurrentUrl());
+		getEvidence(new Object() {
+		});
 	}
 
 }

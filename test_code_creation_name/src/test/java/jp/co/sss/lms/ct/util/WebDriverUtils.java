@@ -86,6 +86,16 @@ public class WebDriverUtils {
 	}
 
 	/**
+	 * 画面最下部までスクロール
+	 * 
+	 * @author otsuka
+	 */
+	public static void scrollHeight() {
+		JavascriptExecutor js = (JavascriptExecutor) webDriver;
+		js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+	}
+
+	/**
 	 * エビデンス取得
 	 * @param instance
 	 */
