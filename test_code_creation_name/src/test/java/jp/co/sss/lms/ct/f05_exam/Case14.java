@@ -121,7 +121,53 @@ public class Case14 {
 	@Order(6)
 	@DisplayName("テスト06 正答と誤答が半々で「確認画面へ進む」ボタンを押下し試験回答確認画面に遷移")
 	void test06() {
+		// ラジオボタンクリック処理
+		// 誤答
+		WebElement radio1 = webDriver.findElement(By.xpath("//div/ul/li/input[@id='answer-0-0']"));
+		radio1.click();
+		scrollBy("200");
+		WebElement radio2 = webDriver.findElement(By.xpath("//div/ul/li/input[@id='answer-1-0']"));
+		radio2.click();
+		scrollBy("450");
+		// 正答
+		WebElement radio3 = webDriver.findElement(By.xpath("//div/ul/li/input[@id='answer-2-0']"));
+		radio3.click();
+		scrollBy("500");
+		WebElement radio4 = webDriver.findElement(By.xpath("//div/ul/li/input[@id='answer-3-0']"));
+		radio4.click();
+		scrollBy("550");
+
+		WebElement radio5 = webDriver.findElement(By.xpath("//div/ul/li/input[@id='answer-4-1']"));
+		radio5.click();
+		scrollBy("200");
+		WebElement radio6 = webDriver.findElement(By.xpath("//div/ul/li/input[@id='answer-5-1']"));
+		radio6.click();
+		scrollBy("150");
+
+		// 誤答
+		WebElement radio7 = webDriver.findElement(By.xpath("//div/ul/li/input[@id='answer-6-0']"));
+		radio7.click();
+		scrollBy("450");
+		WebElement radio8 = webDriver.findElement(By.xpath("//div/ul/li/input[@id='answer-7-0']"));
+		radio8.click();
+		scrollBy("500");
+
+		// 正答
+		WebElement radio9 = webDriver.findElement(By.xpath("//div/ul/li/input[@id='answer-8-1']"));
+		radio9.click();
+		scrollBy("200");
+		WebElement radio10 = webDriver.findElement(By.xpath("//div/ul/li/input[@id='answer-9-1']"));
+		radio10.click();
+		scrollBy("300");
+
+		// 誤答
+		WebElement radio11 = webDriver.findElement(By.xpath("//div/ul/li/input[@id='answer-10-0']"));
+		radio11.click();
+		scrollBy("400");
+		WebElement radio12 = webDriver.findElement(By.xpath("//div/ul/li/input[@id='answer-11-0']"));
+		radio12.click();
 		scrollHeight();
+
 		WebElement div = webDriver.findElement(By.className("container"));
 		WebElement button = div.findElement(By.xpath("//input[@value='確認画面へ進む']"));
 
@@ -146,6 +192,8 @@ public class Case14 {
 		alertAccept();
 
 		pageLoadTimeout(5);
+//		WebElement myScore = webDriver.findElement(By.xpath("//small[text()='あなたのスコア：50.0点']"));
+//		assertEquals("あなたのスコア：50.0点", myScore.getText());
 		assertEquals("http://localhost:8080/lms/exam/result", webDriver.getCurrentUrl());
 		getEvidence(new Object() {
 		});
