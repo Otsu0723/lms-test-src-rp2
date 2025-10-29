@@ -59,29 +59,29 @@ public class Case16 {
 		WebElement loginButton = webDriver.findElement(By.className("btn-primary"));
 		loginButton.click();
 
-		//		assertEquals("http://localhost:8080/lms/user/agreeSecurity", webDriver.getCurrentUrl());
-		//		getEvidence(new Object() {
-		//		});
+		assertEquals("http://localhost:8080/lms/user/agreeSecurity", webDriver.getCurrentUrl());
+		getEvidence(new Object() {
+		});
 	}
 
-	//	@Test
-	//	@Order(3)
-	//	@DisplayName("テスト03 「同意します」チェックボックスにチェックを入れ「次へ」ボタン押下")
-	//	void test03() {
-	//		WebElement div = webDriver.findElement(By.className("checkbox"));
-	//		WebElement check = div.findElement(By.xpath("//input[@value='1']"));
-	//		check.click();
-	//
-	//		pageLoadTimeout(5);
-	//		getEvidence(new Object() {
-	//		}, "01");
-	//		WebElement next = webDriver.findElement(By.xpath("//button[text()='次へ']"));
-	//		next.click();
-	//
-	//		assertEquals("パスワード変更 | LMS", webDriver.getTitle());
-	//		getEvidence(new Object() {
-	//		}, "02");
-	//	}
+	@Test
+	@Order(3)
+	@DisplayName("テスト03 「同意します」チェックボックスにチェックを入れ「次へ」ボタン押下")
+	void test03() {
+		WebElement div = webDriver.findElement(By.className("checkbox"));
+		WebElement check = div.findElement(By.xpath("//input[@value='1']"));
+		check.click();
+
+		pageLoadTimeout(5);
+		getEvidence(new Object() {
+		}, "01");
+		WebElement next = webDriver.findElement(By.xpath("//button[text()='次へ']"));
+		next.click();
+
+		assertEquals("パスワード変更 | LMS", webDriver.getTitle());
+		getEvidence(new Object() {
+		}, "02");
+	}
 
 	@Test
 	@Order(4)
