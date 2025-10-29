@@ -211,7 +211,41 @@ public class Case16 {
 	@Order(6)
 	@DisplayName("テスト06 ポリシーに合わない変更パスワードを入力し「変更」ボタン押下")
 	void test06() {
-		// TODO ここに追加 
+		// 各項目の値をリセット
+		WebElement currentPassword = webDriver.findElement(By.id("currentPassword"));
+		WebElement password = webDriver.findElement(By.id("password"));
+		WebElement passwordConfirm = webDriver.findElement(By.id("passwordConfirm"));
+		currentPassword.clear();
+		password.clear();
+		passwordConfirm.clear();
+
+		// 各項目の値をセット
+		currentPassword.sendKeys("StudentAA05");
+		password.sendKeys("test05");
+		passwordConfirm.sendKeys("test05");
+
+		getEvidence(new Object() {
+		}, "01");
+
+		scrollBy("200");
+		WebElement update = webDriver.findElement(By.xpath("//button[text()='変更']"));
+		update.click();
+
+		// モーダル「変更」ボタンを押下
+		visibilityTimeout(By.className("modal-footer"), 60);
+		WebElement modalUpdate = webDriver.findElement(By.className("modal-footer"));
+		WebElement modalButton = modalUpdate.findElement(By.xpath("//button[@id='upd-btn']"));
+		modalButton.click();
+
+		pageLoadTimeout(60);
+		assertEquals("http://localhost:8080/lms/password/changePassword/change", webDriver.getCurrentUrl());
+
+		String errorText = "「パスワード」には半角英数字のみ使用可能です。また、半角英大文字、半角英小文字、数字を含めた8～20文字を入力してください。";
+		WebElement error = webDriver.findElement(By.xpath("//span[text()='「パスワード」には半角英数字のみ使用可能です。"
+				+ "また、半角英大文字、半角英小文字、数字を含めた8～20文字を入力してください。']"));
+		assertEquals(errorText, error.getText());
+		getEvidence(new Object() {
+		}, "02");
 	}
 
 	@Test
