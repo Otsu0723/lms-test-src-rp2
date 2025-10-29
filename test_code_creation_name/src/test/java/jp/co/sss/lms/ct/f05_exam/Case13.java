@@ -120,7 +120,8 @@ public class Case13 {
 	@Test
 	@Order(6)
 	@DisplayName("テスト06 未回答の状態で「確認画面へ進む」ボタンを押下し試験回答確認画面に遷移")
-	void test06() {
+	void test06() throws InterruptedException {
+		Thread.sleep(2000);
 		scrollHeight();
 		WebElement div = webDriver.findElement(By.className("container"));
 		WebElement button = div.findElement(By.xpath("//input[@value='確認画面へ進む']"));
@@ -139,6 +140,7 @@ public class Case13 {
 	@Order(7)
 	@DisplayName("テスト07 「回答を送信する」ボタンを押下し試験結果画面に遷移")
 	void test07() throws InterruptedException {
+		Thread.sleep(2000);
 		scrollHeight();
 		pageLoadTimeout(20);
 		WebElement button = webDriver.findElement(By.id("sendButton"));
