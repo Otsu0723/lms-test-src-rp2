@@ -117,7 +117,6 @@ public class Case17 {
 
 		pageLoadTimeout(30);
 		assertEquals("http://localhost:8080/lms/course/detail", webDriver.getCurrentUrl());
-
 		getEvidence(new Object() {
 		}, "02");
 	}
