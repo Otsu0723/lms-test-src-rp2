@@ -87,7 +87,35 @@ public class Case16 {
 	@Order(4)
 	@DisplayName("テスト04 パスワードを未入力で「変更」ボタン押下")
 	void test04() {
-		// TODO ここに追加
+		// 項目すべてを未入力に設定
+		WebElement currentPassword = webDriver.findElement(By.id("currentPassword"));
+		currentPassword.clear();
+		WebElement password = webDriver.findElement(By.id("password"));
+		password.sendKeys("StudentAA0505");
+		WebElement passwordConfirm = webDriver.findElement(By.id("passwordConfirm"));
+		passwordConfirm.sendKeys("StudentAA0505");
+
+		getEvidence(new Object() {
+		}, "01");
+
+		WebElement update = webDriver.findElement(By.xpath("//button[text()='変更']"));
+		update.click();
+		pageLoadTimeout(60);
+
+		// モーダル「変更」ボタンを押下
+		visibilityTimeout(By.className("modal-footer"), 60);
+		WebElement modalUpdate = webDriver.findElement(By.className("modal-footer"));
+		WebElement modalButton = modalUpdate.findElement(By.xpath("//button[@id='upd-btn']"));
+		modalButton.click();
+
+		pageLoadTimeout(30);
+		assertEquals("http://localhost:8080/lms/password/changePassword/change", webDriver.getCurrentUrl());
+
+		WebElement error1 = webDriver.findElement(By.xpath("//span[text()='現在のパスワードは必須です。']"));
+		assertEquals("現在のパスワードは必須です。", error1.getText());
+
+		getEvidence(new Object() {
+		}, "02");
 	}
 
 	@Test
