@@ -169,7 +169,42 @@ public class Case16 {
 	@Order(5)
 	@DisplayName("テスト05 20文字以上の変更パスワードを入力し「変更」ボタン押下")
 	void test05() {
-		// TODO ここに追加
+		// 各項目の値をリセット
+		WebElement currentPassword = webDriver.findElement(By.id("currentPassword"));
+		WebElement password = webDriver.findElement(By.id("password"));
+		WebElement passwordConfirm = webDriver.findElement(By.id("passwordConfirm"));
+		currentPassword.clear();
+		password.clear();
+		passwordConfirm.clear();
+
+		// 各項目の値をセット
+		currentPassword.sendKeys("StudentAA05");
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < 21; i++) {
+			sb.append("Test05");
+		}
+		password.sendKeys(sb);
+		passwordConfirm.sendKeys(sb);
+
+		getEvidence(new Object() {
+		}, "01");
+
+		scrollBy("200");
+		WebElement update = webDriver.findElement(By.xpath("//button[text()='変更']"));
+		update.click();
+
+		// モーダル「変更」ボタンを押下
+		visibilityTimeout(By.className("modal-footer"), 60);
+		WebElement modalUpdate = webDriver.findElement(By.className("modal-footer"));
+		WebElement modalButton = modalUpdate.findElement(By.xpath("//button[@id='upd-btn']"));
+		modalButton.click();
+
+		pageLoadTimeout(60);
+		assertEquals("http://localhost:8080/lms/password/changePassword/change", webDriver.getCurrentUrl());
+		WebElement error = webDriver.findElement(By.xpath("//span[text()='パスワードの長さが最大値(20)を超えています。']"));
+		assertEquals("パスワードの長さが最大値(20)を超えています。", error.getText());
+		getEvidence(new Object() {
+		}, "02");
 	}
 
 	@Test
