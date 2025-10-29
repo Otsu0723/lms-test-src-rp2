@@ -192,8 +192,6 @@ public class Case14 {
 		alertAccept();
 
 		pageLoadTimeout(5);
-//		WebElement myScore = webDriver.findElement(By.xpath("//small[text()='あなたのスコア：50.0点']"));
-//		assertEquals("あなたのスコア：50.0点", myScore.getText());
 		assertEquals("http://localhost:8080/lms/exam/result", webDriver.getCurrentUrl());
 		getEvidence(new Object() {
 		});
