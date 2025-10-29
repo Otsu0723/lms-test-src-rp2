@@ -126,7 +126,7 @@ public class Case16 {
 		pageLoadTimeout(30);
 
 		// 新しいパスワードを未入力に設定
-		currentPassword.sendKeys("StudentAA0505");
+		currentPassword.sendKeys("StudentAA05");
 		password.clear();
 		passwordConfirm.clear();
 		passwordConfirm.sendKeys("StudentAA0505");
@@ -141,14 +141,13 @@ public class Case16 {
 		}, "02_02");
 
 		scrollBy("200");
-		//visibilityTimeout(By.xpath("//button[text()='戻る']"), 60);
 		WebElement reback = webDriver.findElement(By.xpath("//button[text()='戻る']"));
 		reback.click();
 		pageLoadTimeout(30);
 
 		// 確認パスワードを未入力に設定
 		currentPassword.clear();
-		currentPassword.sendKeys("StudentAA0505");
+		currentPassword.sendKeys("StudentAA05");
 		password.clear();
 		password.sendKeys("StudentAA0505");
 		passwordConfirm.clear();
